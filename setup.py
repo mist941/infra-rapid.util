@@ -15,7 +15,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "fis=src.cli:cli",
+            "fis=src.main:cli",
         ],
     },
     python_requires=">=3.10",
