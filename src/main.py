@@ -1,4 +1,5 @@
 import click
+from typing import Optional
 
 from src import __version__
 
@@ -18,32 +19,49 @@ def version():
 @cli.command()
 def start():
     """Start the setup process."""
-    frontend = click.prompt(
+    # Use a dictionary to map languages to their frameworks for better organization
+    framework_options = {
+        "python": ["fastapi", "flask"],
+        "javascript": ["express", "nestjs"]
+    }
+
+    frontend_framework = click.prompt(
         "Choose a frontend framework",
-        type=click.Choice(["react", "nextjs"], case_sensitive=False),
+        type=click.Choice(framework_options["javascript"],
+                          case_sensitive=False),
     )
+
     backend_language = click.prompt(
         "Choose a backend language",
-        type=click.Choice(["python", "javascript"], case_sensitive=False),
+        type=click.Choice(list(framework_options.keys()),
+                          case_sensitive=False),
     )
-    if backend_language == "python":
-        backend_framework = click.prompt(
-            "Choose a backend framework",
-            type=click.Choice(["fastapi", "flask"], case_sensitive=False),
-        )
-    if backend_language == "javascript":
-        backend_framework = click.prompt(
-            "Choose a backend framework",
-            type=click.Choice(["express", "nestjs"], case_sensitive=False),
-        )
-    print(
-        f"You chose {frontend} and {backend_language} with {backend_framework}!"
+
+    backend_framework = click.prompt(
+        "Choose a backend framework",
+        type=click.Choice(framework_options[backend_language],
+                          case_sensitive=False),
+    )
+
+    database = click.prompt(
+        "Choose a database",
+        type=click.Choice(["postgresql", "mysql", "mongodb"],
+                          case_sensitive=False),
+    )
+
+    click.echo(
+        f"You chose {frontend_framework} and {backend_language} with {backend_framework} and {database}!"
     )
 
 
 @cli.command()
-def pattern(pattern=None):
+@click.argument("pattern", required=False)
+def pattern(pattern: Optional[str] = None):
     """Use a predefined pattern."""
+    if pattern is None:
+        click.echo(
+            "No pattern specified. Available patterns: MERN, PERN, etc.")
+        return
     click.echo(f"You chose {pattern}!")
 
 
