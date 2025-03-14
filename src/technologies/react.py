@@ -1,5 +1,4 @@
 import subprocess
-from typing import List
 
 
 def install_react(project_name: str):
