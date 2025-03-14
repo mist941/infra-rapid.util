@@ -1,10 +1,8 @@
 import subprocess
 
 
-def install_react(project_name: str):
-    command = f"npm init vite@latest {project_name} -- --template"
-
-    result = subprocess.run(
+def execute_command(command: str):
+    subprocess.run(
         command,
         shell=True,
         text=True,
@@ -12,4 +10,8 @@ def install_react(project_name: str):
         stderr=None,
     )
 
-    print(result.stdout)
+
+def setup_react(project_name: str):
+    command = f"npm init vite@latest {project_name} -- --template react-ts"
+
+    execute_command(command)

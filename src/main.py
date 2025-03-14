@@ -3,7 +3,7 @@ from typing import Optional
 import click
 
 from src import __version__
-from src.technologies.react import install_react
+from src.technologies.react import setup_react
 
 
 @click.group()
@@ -31,7 +31,7 @@ def setup(pattern: Optional[str] = None, name: Optional[str] = None):
         return
 
     if pattern == "react":
-        install_react(name)
+        setup_react(name)
 
 
 if __name__ == "__main__":
