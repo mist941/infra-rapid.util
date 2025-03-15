@@ -1,5 +1,6 @@
 # File Structure
-```src/
+```
+src/
   │
   ├── presets/                             # Configuration preset
   │   └── react-ts-fastapi-lambda.json
