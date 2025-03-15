@@ -36,11 +36,9 @@ src/
   │   ├── docker_generator.py              
   │   ├── ci_cd_generator.py               
   │   ├── git_generator.py                 
-  │   └── project_generator.py             
-  │
-  ├── outputs/                             
-  ├── cli.py                               
-  ├── main.py                              
-  ├── README.md                           
-  └── requirements.txt
+  │   └── project_generator.py                                      
+cli.py                               
+main.py                              
+README.md                           
+requirements.txt
 ```
