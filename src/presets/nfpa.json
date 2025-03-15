@@ -1,0 +1,6 @@
+{
+  "description": "NextJS, FastAPI, PostgreSQL, AWS",
+  "frontend": "nextjs",
+  "backend": "python/fastapi",
+  "infrastructure": ["terraform/aws-ec2", "terraform/aws-postgres"]
+}
