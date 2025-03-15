@@ -3,7 +3,6 @@ from typing import Optional
 import click
 
 from src import __version__
-from src.technologies.react import setup_react
 
 
 @click.group()
@@ -29,9 +28,6 @@ def setup(pattern: Optional[str] = None, name: Optional[str] = None):
     if name is None:
         click.echo("No name specified. Use --name or -n to specify a name.")
         return
-
-    if pattern == "react":
-        setup_react(name)
 
 
 if __name__ == "__main__":
