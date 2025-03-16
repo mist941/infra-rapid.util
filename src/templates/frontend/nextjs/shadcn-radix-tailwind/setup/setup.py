@@ -1,3 +1,4 @@
+import json
 import os
 import pathlib
 
@@ -25,33 +26,72 @@ def copy_store_template(path, store_name):
 def copy_button_component(dest_path):
     # Get the directory of the current script
     current_dir = pathlib.Path(__file__).parent.absolute()
-    button_path = os.path.join(current_dir, "Button.tsx")
+    button_folder_path = os.path.join(current_dir, "Button")
 
-    # Copy Button component to the appropriate directory
-    if os.path.exists(button_path):
-        with open(button_path, "r") as button_file:
-            button_content = button_file.read()
+    # Create Button directory in destination
+    button_dest_path = os.path.join(dest_path, "Button")
+    os.makedirs(button_dest_path, exist_ok=True)
 
-        with open(f"{dest_path}/Button.tsx", "w") as f:
-            f.write(button_content)
+    # Copy all files from Button folder
+    if os.path.exists(button_folder_path):
+        for file_name in os.listdir(button_folder_path):
+            source_file = os.path.join(button_folder_path, file_name)
+            dest_file = os.path.join(button_dest_path, file_name)
+
+            if os.path.isfile(source_file):
+                with open(source_file, "r") as src_file:
+                    content = src_file.read()
+
+                with open(dest_file, "w") as dst_file:
+                    dst_file.write(content)
+
+
+def update_components_json(architecture: str):
+    current_dir = pathlib.Path(__file__).parent.parent.absolute()
+    components_json_path = os.path.join(current_dir, "components.json")
+
+    with open(components_json_path, "r") as f:
+        components_config = json.load(f)
+
+    if architecture == "atomic":
+        components_config["aliases"] = {
+            "components": "@/components/atoms",
+            "utils": "@/lib/utils",
+            "ui": "@/components/atoms",
+            "lib": "@/lib",
+            "hooks": "@/hooks",
+        }
+    elif architecture == "feature-based":
+        components_config["aliases"] = {
+            "components": "@/shared/ui",
+            "utils": "@/lib/utils",
+            "ui": "@/shared/ui",
+            "lib": "@/lib",
+            "hooks": "@/shared/hooks",
+        }
+
+    with open(components_json_path, "w") as f:
+        json.dump(components_config, f, indent=2)
 
 
 def setup(architecture: str):
+    # Update components.json based on architecture
+    update_components_json(architecture)
+
     # Copy the store template instead of creating it
 
     if architecture == "atomic":
         atomic_dirs = [
-            "src/components/atoms",  # Smallest, indivisible components (buttons, inputs, etc.)
-            "src/components/molecules",  # Combinations of atoms (form fields, search bars, etc.)
-            "src/components/organisms",  # Complex UI sections (headers, forms, etc.)
-            "src/components/templates",  # Page layouts without specific content
-            "src/components/pages",  # Complete pages using templates and organisms
-            "src/utils",  # Utility functions
-            "src/hooks",  # Custom React hooks
-            "src/context",  # React context providers
-            "src/services",  # API services and external integrations
-            "src/assets",  # Images, fonts, and other static assets
-            "src/types",  # TypeScript type definitions
+            "src/components/atoms",
+            "src/components/molecules",
+            "src/components/organisms",
+            "src/components/templates",
+            "src/components/pages",
+            "src/utils",
+            "src/hooks",
+            "src/context",
+            "src/services",
+            "src/types",
         ]
 
         # Create each directory
@@ -64,6 +104,7 @@ def setup(architecture: str):
         # Create index files in each component directory
         component_dirs = [
             "/components/pages",
+            "/components/atoms",
             "/components/molecules",
             "/components/organisms",
             "/components/templates",
@@ -90,11 +131,10 @@ export * from './appStore'
 
         # Create main src directories
         feature_dirs = [
-            "src/features",  # Main features directory
-            "src/shared",  # Shared components, hooks, utils
-            "src/layouts",  # Layout components
-            "src/assets",  # Images, fonts, and other static assets
-            "src/types",  # TypeScript type definitions
+            "src/features",
+            "src/shared",
+            "src/layouts",
+            "src/types",
         ]
 
         # Create each directory
@@ -104,11 +144,11 @@ export * from './appStore'
         # Create example feature structure
         example_feature = "src/features/auth"
         feature_subdirs = [
-            f"{example_feature}/components",  # Feature-specific components
-            f"{example_feature}/hooks",  # Feature-specific hooks
-            f"{example_feature}/services",  # Feature-specific API services
-            f"{example_feature}/utils",  # Feature-specific utilities
-            f"{example_feature}/types",  # Feature-specific types
+            f"{example_feature}/ui",
+            f"{example_feature}/hooks",
+            f"{example_feature}/services",
+            f"{example_feature}/utils",
+            f"{example_feature}/types",
         ]
 
         for directory in feature_subdirs:
@@ -116,11 +156,11 @@ export * from './appStore'
 
         # Create shared structure
         shared_subdirs = [
-            "src/shared/ui",  # Reusable UI components
-            "src/shared/hooks",  # Reusable hooks
-            "src/shared/utils",  # Utility functions
-            "src/shared/services",  # Common API services
-            "src/shared/constants",  # App constants
+            "src/shared/ui",
+            "src/shared/hooks",
+            "src/shared/utils",
+            "src/shared/services",
+            "src/shared/constants",
         ]
 
         for directory in shared_subdirs:
@@ -170,4 +210,4 @@ export * from './authStore'
 
 
 if __name__ == "__main__":
-    setup("feature-based")
+    setup("atomic")
