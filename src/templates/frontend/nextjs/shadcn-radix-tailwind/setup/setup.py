@@ -74,7 +74,7 @@ def update_components_json(architecture: str):
         json.dump(components_config, f, indent=2)
 
 
-def setup(architecture: str):
+def setup(architecture: str = "atomic"):
     # Update components.json based on architecture
     update_components_json(architecture)
 
