@@ -22,7 +22,7 @@ def copy_store_template(path, store_name):
         f.write(customized_content)
 
 
-def copy_button_component(source_path, dest_path):
+def copy_button_component(dest_path):
     # Get the directory of the current script
     current_dir = pathlib.Path(__file__).parent.absolute()
     button_path = os.path.join(current_dir, "Button.tsx")
@@ -59,7 +59,7 @@ def setup(architecture: str):
             os.makedirs(directory, exist_ok=True)
 
         # Copy Button component to atoms directory
-        copy_button_component("setup", "src/components/atoms")
+        copy_button_component("src/components/atoms")
 
         # Create index files in each component directory
         component_dirs = [
@@ -127,7 +127,7 @@ export * from './appStore'
             os.makedirs(directory, exist_ok=True)
 
         # Copy Button component to shared/ui directory
-        copy_button_component("setup", "src/shared/ui")
+        copy_button_component("src/shared/ui")
 
         # Add shared store using template
         os.makedirs("src/shared/store", exist_ok=True)
