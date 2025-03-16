@@ -1,0 +1,9 @@
+{
+  "name": "nextjs-fastapi-postgress-aws",
+  "description": "A preset for a Next.js project with FastAPI backend, PostgreSQL database, and AWS services.",
+  "preset": {
+    "frontend": "nextjs/shadcn-radix-tailwind",
+    "backend": "python/fastapi-postgresql",
+    "infrastructure": ["ec2", "rds"]
+  }
+}
