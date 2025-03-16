@@ -99,7 +99,7 @@ export * from './appStore'
 
         # Create shared structure
         shared_subdirs = [
-            "src/shared/components",  # Reusable UI components
+            "src/shared/ui",  # Reusable UI components
             "src/shared/hooks",  # Reusable hooks
             "src/shared/utils",  # Utility functions
             "src/shared/services",  # Common API services
