@@ -210,4 +210,4 @@ export * from './authStore'
 
 
 if __name__ == "__main__":
-    setup("atomic")
+    setup("feature-based")
