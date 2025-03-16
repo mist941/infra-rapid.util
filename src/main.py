@@ -1,3 +1,4 @@
+import json
 from typing import Optional
 
 import click
@@ -28,6 +29,9 @@ def setup(pattern: Optional[str] = None, name: Optional[str] = None):
     if name is None:
         click.echo("No name specified. Use --name or -n to specify a name.")
         return
+
+    with open("data.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
 
 
 if __name__ == "__main__":
