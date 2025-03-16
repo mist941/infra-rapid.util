@@ -1,9 +1,14 @@
 import os
+import pathlib
 
 
 def copy_store_template(path, store_name):
+    # Get the directory of the current script
+    current_dir = pathlib.Path(__file__).parent.absolute()
+    template_path = os.path.join(current_dir, "store-template.ts")
+
     with open(
-        "store-template.ts",
+        template_path,
         "r",
     ) as template_file:
         template_content = template_file.read()
@@ -72,8 +77,6 @@ export * from './appStore'
             "src/shared",  # Shared components, hooks, utils
             "src/layouts",  # Layout components
             "src/assets",  # Images, fonts, and other static assets
-            "src/styles",  # Global styles and theme definitions
-            "src/config",  # App configuration
             "src/types",  # TypeScript type definitions
         ]
 
@@ -147,4 +150,4 @@ export * from './authStore'
 
 
 if __name__ == "__main__":
-    setup("atomic")
+    setup("feature-based")
